@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     Text myScoreTxt;
 
     public int health;
+    public int score;
 
     void Awake() {
         myBod = GetComponent<Rigidbody>();
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //ALL CUBES
         myHealthBar.localScale = new Vector3(health / 100f, 1, 1);
+        myScoreTxt.text = "" + score;
         if(health <= 0) {
             //dead
             health = 0;
@@ -78,4 +80,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             health = (int) stream.ReceiveNext();
         }
     }
+
+    [PunRPC]
+    public void increaseScore(int n) {
+        score += n;
+    }
+
 }
